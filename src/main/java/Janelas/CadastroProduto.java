@@ -5,7 +5,6 @@
  */
 package Janelas;
 
-import BD.Conexao;
 import Model.ProdutoTableModel;
 import Objetos.Produto;
 import javax.swing.JOptionPane;
@@ -79,6 +78,11 @@ public class CadastroProduto extends javax.swing.JFrame {
         });
 
         jBAlterar.setText("Alterar");
+        jBAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAlterarActionPerformed(evt);
+            }
+        });
 
         jBRemover.setText("Remover");
         jBRemover.addActionListener(new java.awt.event.ActionListener() {
@@ -99,6 +103,11 @@ public class CadastroProduto extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTProdutosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTProdutos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -216,6 +225,23 @@ public class CadastroProduto extends javax.swing.JFrame {
             modelo.removeLinha(jTProdutos.getSelectedRow());
         }
     }//GEN-LAST:event_jBRemoverActionPerformed
+
+    private void jTProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTProdutosMouseClicked
+       Produto p = modelo.pegaDadosLinha(jTProdutos.getSelectedRow());
+       jTDescricao.setText(p.getDescricao());
+       jTQuantidade.setText(String.valueOf(p.getQuantidade()));
+       jTValor.setText(String.valueOf(p.getValor()));
+       
+    }//GEN-LAST:event_jTProdutosMouseClicked
+
+    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
+      if (jTProdutos.getSelectedRow() != -1){
+          modelo.setValueAt(jTDescricao.getText(), jTProdutos.getSelectedRow(), 0);
+          modelo.setValueAt(jTQuantidade.getText(), jTProdutos.getSelectedRow(), 1);
+          modelo.setValueAt(jTValor.getText(), jTProdutos.getSelectedRow(), 3);
+          limparCadastro();
+      } 
+    }//GEN-LAST:event_jBAlterarActionPerformed
 
     /**
      * @param args the command line arguments
