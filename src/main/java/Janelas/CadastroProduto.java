@@ -189,34 +189,37 @@ public class CadastroProduto extends javax.swing.JFrame {
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
         Produto p = new Produto();
 
+//        try {
+//            if (jTQuantidade.getText().matches("^[0-9]+$") && jTValor.getText().matches("^[0-9]+$")) {
+//                p.setDescricao(jTDescricao.getText());
+//                p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
+//                p.setValor(Double.parseDouble(jTValor.getText().replace(",", "."));
+//                modelo.addLinha(p);
+//                limparCadastro();
+//            } else {
+//                if (!(jTQuantidade.getText().matches("^[0-9]+$"))) {
+//                    JOptionPane.showMessageDialog(this, "Preencha a quantidade");
+//                    jTQuantidade.requestFocus();
+//                } else if (!(jTValor.getText().matches("^[0-9]+$"))) {
+//                    JOptionPane.showMessageDialog(this, "Preencha o valor");
+//                    jTValor.requestFocus();
+//                }
+//            }
+//
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(this, "Preencha os campos corretamente." + "\n" + "Código do erro: " + e);
+//        }
         try {
-            if (jTQuantidade.getText().matches("^[0-9]+$") && jTValor.getText().matches("^[0-9]+$")) {
-                p.setDescricao(jTDescricao.getText());
-                p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
-                p.setValor(Double.parseDouble(jTValor.getText()));
-                modelo.addLinha(p);
-                limparCadastro();
-            } else {
-                if (!(jTQuantidade.getText().matches("^[0-9]+$"))) {
-                    JOptionPane.showMessageDialog(this, "Preencha a quantidade");
-                    jTQuantidade.requestFocus();
-                } else if (!(jTValor.getText().matches("^[0-9]+$"))) {
-                    JOptionPane.showMessageDialog(this, "Preencha o valor");
-                    jTValor.requestFocus();
-                }
-            }
+            p.setDescricao(jTDescricao.getText());
+            p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
+            p.setValor(Double.parseDouble(jTValor.getText().replace(",", ".")));
 
+            modelo.addLinha(p);
+
+            limparCadastro();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Preencha os campos corretamente." + "\n" + "Código do erro: " + e);
         }
-
-//     p.setDescricao(jTDescricao.getText());
-//     p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
-//     p.setValor(Double.parseDouble(jTValor.getText()));
-//     
-//     modelo.addLinha(p);
-//        
-//     limparCadastro();
 
     }//GEN-LAST:event_jBCadastrarActionPerformed
 
@@ -227,20 +230,20 @@ public class CadastroProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jBRemoverActionPerformed
 
     private void jTProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTProdutosMouseClicked
-       Produto p = modelo.pegaDadosLinha(jTProdutos.getSelectedRow());
-       jTDescricao.setText(p.getDescricao());
-       jTQuantidade.setText(String.valueOf(p.getQuantidade()));
-       jTValor.setText(String.valueOf(p.getValor()));
-       
+        Produto p = modelo.pegaDadosLinha(jTProdutos.getSelectedRow());
+        jTDescricao.setText(p.getDescricao());
+        jTQuantidade.setText(String.valueOf(p.getQuantidade()));
+        jTValor.setText(String.valueOf(p.getValor()));
+
     }//GEN-LAST:event_jTProdutosMouseClicked
 
     private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
-      if (jTProdutos.getSelectedRow() != -1){
-          modelo.setValueAt(jTDescricao.getText(), jTProdutos.getSelectedRow(), 0);
-          modelo.setValueAt(jTQuantidade.getText(), jTProdutos.getSelectedRow(), 1);
-          modelo.setValueAt(jTValor.getText(), jTProdutos.getSelectedRow(), 3);
-          limparCadastro();
-      } 
+        if (jTProdutos.getSelectedRow() != -1) {
+            modelo.setValueAt(jTDescricao.getText(), jTProdutos.getSelectedRow(), 0);
+            modelo.setValueAt(jTQuantidade.getText(), jTProdutos.getSelectedRow(), 1);
+            modelo.setValueAt(jTValor.getText(), jTProdutos.getSelectedRow(), 2);
+            limparCadastro();
+        }
     }//GEN-LAST:event_jBAlterarActionPerformed
 
     /**
