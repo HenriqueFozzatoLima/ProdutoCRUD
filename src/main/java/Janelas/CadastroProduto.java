@@ -6,6 +6,9 @@
 package Janelas;
 
 import BD.Conexao;
+import Model.ProdutoTableModel;
+import Objetos.Produto;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,11 +16,23 @@ import BD.Conexao;
  */
 public class CadastroProduto extends javax.swing.JFrame {
 
+    ProdutoTableModel modelo = new ProdutoTableModel();
+
+    public void limparCadastro() {
+        jTDescricao.setText("");
+        jTQuantidade.setText("");
+        jTValor.setText("");
+
+        //Comando para colocar o mouse em determinada posição.
+        jTDescricao.requestFocus();
+    }
+
     /**
      * Creates new form CadastroProduto
      */
     public CadastroProduto() {
         initComponents();
+        jTProdutos.setModel(modelo);
     }
 
     /**
@@ -66,6 +81,11 @@ public class CadastroProduto extends javax.swing.JFrame {
         jBAlterar.setText("Alterar");
 
         jBRemover.setText("Remover");
+        jBRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRemoverActionPerformed(evt);
+            }
+        });
 
         jTProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,9 +178,44 @@ public class CadastroProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCadastrarActionPerformed
-        
-        
+        Produto p = new Produto();
+
+        try {
+            if (jTQuantidade.getText().matches("^[0-9]+$") && jTValor.getText().matches("^[0-9]+$")) {
+                p.setDescricao(jTDescricao.getText());
+                p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
+                p.setValor(Double.parseDouble(jTValor.getText()));
+                modelo.addLinha(p);
+                limparCadastro();
+            } else {
+                if (!(jTQuantidade.getText().matches("^[0-9]+$"))) {
+                    JOptionPane.showMessageDialog(this, "Preencha a quantidade");
+                    jTQuantidade.requestFocus();
+                } else if (!(jTValor.getText().matches("^[0-9]+$"))) {
+                    JOptionPane.showMessageDialog(this, "Preencha o valor");
+                    jTValor.requestFocus();
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Preencha os campos corretamente." + "\n" + "Código do erro: " + e);
+        }
+
+//     p.setDescricao(jTDescricao.getText());
+//     p.setQuantidade(Integer.parseInt(jTQuantidade.getText()));
+//     p.setValor(Double.parseDouble(jTValor.getText()));
+//     
+//     modelo.addLinha(p);
+//        
+//     limparCadastro();
+
     }//GEN-LAST:event_jBCadastrarActionPerformed
+
+    private void jBRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRemoverActionPerformed
+        if (jTProdutos.getSelectedRow() != -1) {
+            modelo.removeLinha(jTProdutos.getSelectedRow());
+        }
+    }//GEN-LAST:event_jBRemoverActionPerformed
 
     /**
      * @param args the command line arguments
