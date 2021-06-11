@@ -15,6 +15,7 @@ public class Usuarios {
     private String nome = "";
     private String login = "";
     private String senha = "";
+    private String tipo = "";
 
     /**
      * @return the id
@@ -72,9 +73,13 @@ public class Usuarios {
         this.senha = senha;
     }
     
+    public String getTipo(){
+        return tipo;
+    }
     
-    
-    
+    public void setTipo(String tipo){
+        this.tipo = tipo;
+    }
     
     
 }

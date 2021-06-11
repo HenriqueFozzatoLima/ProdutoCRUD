@@ -33,6 +33,10 @@ public class JanelaUsuarios extends javax.swing.JFrame {
         initComponents();
         jTableUsuario.setModel(modelo);
         modelo.recarregaTabela();
+        jCBTipo.removeAllItems();
+        jCBTipo.addItem("ADM");
+        jCBTipo.addItem("USR");
+        jCBTipo.setSelectedIndex(1);
 
     }
 
@@ -57,6 +61,8 @@ public class JanelaUsuarios extends javax.swing.JFrame {
         jBRemover = new javax.swing.JButton();
         jBAlterar = new javax.swing.JButton();
         jBCadastrar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jCBTipo = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -108,6 +114,10 @@ public class JanelaUsuarios extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Tipo:");
+
+        jCBTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -127,7 +137,12 @@ public class JanelaUsuarios extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTLogin)
-                            .addComponent(jTSenha)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCBTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 132, Short.MAX_VALUE)
                         .addComponent(jBCadastrar)
@@ -151,7 +166,9 @@ public class JanelaUsuarios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jCBTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBRemover)
@@ -197,6 +214,7 @@ public class JanelaUsuarios extends javax.swing.JFrame {
             u.setNome(jTNome.getText());
             u.setLogin(jTLogin.getText());
             u.setSenha(jTSenha.getText());
+            u.setTipo(jCBTipo.getSelectedItem().toString());
 
             udao.create(u);
             modelo.recarregaTabela();
@@ -214,6 +232,7 @@ public class JanelaUsuarios extends javax.swing.JFrame {
             modelo.setValueAt(jTNome.getText(), jTableUsuario.getSelectedRow(), 0);
             modelo.setValueAt(jTLogin.getText(), jTableUsuario.getSelectedRow(), 1);
             modelo.setValueAt(jTSenha.getText(), jTableUsuario.getSelectedRow(), 2);
+            modelo.setValueAt(jCBTipo.getSelectedItem(), jTableUsuario.getSelectedRow(), 3);
 
             Usuarios u = modelo.pegaDadosLinha(jTableUsuario.getSelectedRow());
 
@@ -232,6 +251,7 @@ public class JanelaUsuarios extends javax.swing.JFrame {
         jTNome.setText(u.getNome());
         jTLogin.setText(u.getLogin());
         jTSenha.setText(u.getSenha());
+        jCBTipo.setSelectedItem(u.getTipo());
 
     }//GEN-LAST:event_jTableUsuarioMouseClicked
 
@@ -287,10 +307,12 @@ public class JanelaUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton jBAlterar;
     private javax.swing.JButton jBCadastrar;
     private javax.swing.JButton jBRemover;
+    private javax.swing.JComboBox<String> jCBTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTLogin;

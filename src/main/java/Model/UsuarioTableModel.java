@@ -19,7 +19,7 @@ public class UsuarioTableModel extends AbstractTableModel {
 
     private List<Usuarios> dados = new ArrayList<>();
 
-    private String[] colunas = {"Nome", "Login", "Senha"};
+    private String[] colunas = {"Nome", "Login", "Senha", "Tipo"};
 
     @Override
     public String getColumnName(int column) {
@@ -46,6 +46,8 @@ public class UsuarioTableModel extends AbstractTableModel {
                 return dados.get(linha).getLogin();
             case 2:
                 return dados.get(linha).getSenha();
+            case 3:
+                return dados.get(linha).getTipo();
         }
         return null;
     }
@@ -62,7 +64,9 @@ public class UsuarioTableModel extends AbstractTableModel {
             case 2:
                 dados.get(linha).setSenha((String) valor);
                 break;
-                
+            case 3:
+                dados.get(linha).setTipo((String) valor);
+                break;
         }
         this.fireTableRowsUpdated(linha, linha);
     }

@@ -37,6 +37,7 @@ public class UsuarioDAO {
                 u.setNome(rs.getString("nome"));
                 u.setLogin(rs.getString("login"));
                 u.setSenha(rs.getString("senha"));
+                u.setTipo(rs.getString("tipo"));
                 usuarios.add(u);
             }
 
@@ -54,10 +55,11 @@ public class UsuarioDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("INSERT INTO tbl_usuarios (nome, login, senha) VALUES (?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO tbl_usuarios (nome, login, senha, tipo) VALUES (?, ?, ?, ?)");
             stmt.setString(1, u.getNome());
             stmt.setString(2, u.getLogin());
             stmt.setString(3, u.getSenha());
+            stmt.setString(4, u.getTipo());
 
             stmt.execute();
             JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso");
@@ -75,11 +77,12 @@ public class UsuarioDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE tbl_usuarios SET nome = ?, login = ?, senha = ? WHERE id = ?");
+            stmt = con.prepareStatement("UPDATE tbl_usuarios SET nome = ?, login = ?, senha = ?, tipo = ? WHERE id = ?");
             stmt.setString(1, u.getNome());
             stmt.setString(2, u.getLogin());
             stmt.setString(3, u.getSenha());
-            stmt.setInt(4, u.getId());
+            stmt.setString(4, u.getTipo());
+            stmt.setInt(5, u.getId());
 
             stmt.execute();
 
@@ -110,6 +113,29 @@ public class UsuarioDAO {
             Conexao.closeConnection(con, stmt);
         }
 
+    }
+    
+    public boolean checaLogin(String login, String senha){
+        Connection con = Conexao.getConection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        boolean logado = false;
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM tbl_usuarios WHERE login = ? and senha = ?");
+            stmt.setString(1, login);
+            stmt.setString(2, senha);
+            rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                logado = true;
+            }
+            
+        } catch (Exception e) {
+        } finally {
+            Conexao.closeConnection(con, stmt, rs);
+        }
+        return logado;
     }
 
 }
